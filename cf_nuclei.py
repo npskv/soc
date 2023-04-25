@@ -3,6 +3,7 @@ import json
 import subprocess
 import os
 import sys
+import socket
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -17,7 +18,19 @@ HEADERS = {
     "Authorization": f"Bearer {CLOUDFLARE_API_TOKEN}",
 }
 
+def is_host_alive(host, ports=(80, 443), timeout=3):
+    for port in ports:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+            sock.settimeout(timeout)
+            result = sock.connect_ex((host, port))
+            if result == 0:
+                return True
+    return False
+
 def prepare_custom_templates():
+
+    print("Checking if custom_templates directory exists...")   
+
     if not os.path.exists("custom_templates"):
         print("Creating custom_templates directory...")
         os.makedirs("custom_templates")
@@ -27,6 +40,8 @@ def prepare_custom_templates():
         
         command = 'find nuclei-templates -type f -name "*.yaml" -exec grep -lE "severity: (high|critical)" {} \; -exec cp {} custom_templates/ \;'
         subprocess.run(command, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    else:
+        print("custom_templates directory already exists.")
 
 def get_zone_id(domain_name):
     url = f"{API_BASE_URL}zones?name={domain_name}"
@@ -82,14 +97,23 @@ def main():
 
     zone_id = get_zone_id(domain_name)
     if zone_id:
+        print(f"Found zone id for {domain_name}")
+        print("Getting A records...")
         a_records = get_a_records(zone_id)
+        
         if a_records:
             num_records = len(a_records)
             print(f"Found {num_records} A records for {domain_name}")
+            
             for record in a_records:
+               
                 domain = record['name']
-                print(f"Scanning {domain} with Nuclei...")
-                scan_domain_with_nuclei(domain)
+                
+                if is_host_alive(domain):
+                    print(f"{domain} is alive. Scanning with Nuclei...")
+                    scan_domain_with_nuclei(domain)
+                else:
+                    print(f"{domain} is not alive. Skipping Nuclei scan.")
         else:
             print("No A records found.")
     else:
