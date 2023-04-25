@@ -38,12 +38,29 @@ def get_zone_id(domain_name):
     return None
 
 def get_a_records(zone_id):
+    all_records = []
     url = f"{API_BASE_URL}zones/{zone_id}/dns_records?type=A"
-    response = requests.get(url, headers=HEADERS)
-    if response.status_code == 200:
-        result = response.json()
-        return result["result"]
-    return None
+    page = 1
+    per_page = 100
+
+    while True:
+        response = requests.get(f"{url}&page={page}&per_page={per_page}", headers=HEADERS)
+        if response.status_code == 200:
+            result = response.json()
+            a_records = result["result"]
+            all_records.extend(a_records)
+
+            # Check if there are more pages
+            total_pages = result["result_info"]["total_pages"]
+            if page < total_pages:
+                page += 1
+            else:
+                break
+        else:
+            break
+
+    return all_records if all_records else None
+
 
 def scan_domain_with_nuclei(domain):
     output_file = f"{domain}_nuclei_output.txt"
