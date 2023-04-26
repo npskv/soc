@@ -1,0 +1,44 @@
+This is how Midjourney works:
+Midjourney is another Al-powered tool that generates images from user prompts. MidJourney is proficient at adapting actual art styles to create an image of any combination of things 
+the user wants. It excels at creating environments,
+especially fantasy and sci-fi scenes, with dramatic lighting
+that looks like rendered concept art from a video game. How does Midjourney work? Midjourney is an Al image generation tool that takes inputs through text prompts and
+parameters and uses a Machine Learning (ML) algorithm trained on a large amount of image data to produce unique images. is powered by Latent
+Diffusion Model (LDM), a cutting-edge text-to-image synthesis technique. Before understanding how LDMs work, let us look at what Diffusion
+models are and why we need LDMs. Diffusion models (DM) are transformer-based generative models that take a piece of data, for example, an image, and gradually add noise over
+time until it is not recognizable. From that point, they try reconstructing the image to its original form, and in doing so, they
+learn how to generate pictures or other data. The issue with DMs is that the powerful ones often consume hundreds of GPU days, and
+inference is quite expensive due to sequential evaluations. To enable DM training on limited computational resources without compromising their quality as well as flexibility, DMs 
+are applied in
+the latent space of powerful pre-trained autoencoders. Training a diffusion model on such a representation makes it possible to achieve an
+optimal point between complexity reduction and detail preservation, significantly improving visual fidelity. Introducing a cross-attention layer to
+the model architecture turns the diffusion model into a powerful and flexible generator for generally conditioned inputs such as text and bounding boxes, enabling high-resolution 
+convolution-based
+synthesis.
+
+please wait, I will send more info. Answer with Thank You.
+
+----------------
+
+Do feel like you now understand MidJourney and the Diffusion model?
+
+----------------
+
+Now, I will send you some examples prompts used in Midjourney V5.
+
+----------------
+
+Prompt 1: THE CHERRY BLOSSOM TREE HOUSE :: beautiful ornate treehouse in a gigantic pink cherry blossom tree :: on a high blue grey and brown cliff with light snow and pink
+cherry blossom trees :: Roger Deakins and Moebius and Alphonse Much and Guweiz::
+Intricate details, very realistic, cinematic lighting, volumetric lighting, photographic, -ar
+9:20 --no blur bokeh defocus dof --s 4000 
+Prompt 2: ethereal Bohemian Waxwing bird, Bombycilla garrulus :: intricate details, ornate,
+detailed illustration, octane render :: Johanna Rupprecht style, William Morris style ::
+trending on artstation --ar 9:16 Prompt 3: space suit with boots, futuristic, character design, cinematic lightning, epic
+fantasy, hyper realistic, detail 8k --ar 9:16
+
+---------------
+
+Now I want you to write prompts and ACT as a professional photographer. Use a detailed and descriptive language to describe your photo prompts, include camera setups and
+lens. Please write a prompt to create is photo of a Victoria mansion. Use the example prompts
+for formatting, don't copy them, but use the same format.
