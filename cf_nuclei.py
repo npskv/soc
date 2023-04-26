@@ -71,13 +71,13 @@ def main():
             a_hosts = [record['name'] for record in a_records]
 
             # Save the list of hosts to a file
-            hosts_file = "hosts.txt"
+            hosts_file = f"hosts-{domain_name}.txt"
             with open(hosts_file, "w") as f:
                 f.write("\n".join(a_hosts))
             
             # Run nuclei with the hosts file
             print("Running nuclei...")
-            nuclei_cmd = f"nuclei -l {hosts_file} -stats -s high,critical -o nuclei_output.txt"
+            nuclei_cmd = f"nuclei -l {hosts_file} -stats -s high,critical -o {domain_name}-output.txt"
             subprocess.run(nuclei_cmd, shell=True)
         else:
             print("No A records found.")
